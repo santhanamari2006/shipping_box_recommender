@@ -16,24 +16,12 @@
 python manage.py check
 ```
 
-**Actual Output:**
-
-```text
-Paste the actual terminal output here.
-```
-
 ## 3. Database Migration Test
 
 **Command:**
 
 ```bash
 python manage.py migrate
-```
-
-**Actual Output:**
-
-```text
-Paste the actual terminal output here.
 ```
 
 ## 4. Development Server Test
@@ -48,12 +36,6 @@ python manage.py runserver
 
 ```text
 http://127.0.0.1:8000/
-```
-
-**Actual Output:**
-
-```text
-Paste the actual terminal output here.
 ```
 
 ## 5. Functional Test Cases
