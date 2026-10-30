@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Packaging Dashboard</title>
+    <style>
+        .logout-btn {
+        display: inline-block;
+        background-color: #2878d0;
+        color: white;
+        padding: 12px 22px;
+        text-decoration: none;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .logout-btn:hover {
+        background-color: #185da8;
+    }
+    </style>
+</head>
+<body style="font-family:Arial; background:#f2f5f9; padding:30px;">
+
+<div style="max-width:1000px; margin:auto; background:white;
+            padding:25px; border-radius:10px;">
+
+    <h2>Packaging Staff Dashboard</h2>
+
+    <p>Welcome, {{ request.user.username }}</p>
+
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+
+    <h3>Completed Customer Orders</h3>
+
+    {% for order in orders %}
+        <div style="border:1px solid #ddd; padding:15px;
+                    margin:15px 0; border-radius:8px;">
+
+            <h3>Customer: {{ order.user.username }}</h3>
+
+            <p>Date: {{ order.created_at }}</p>
+
+            <table width="100%" border="1" cellpadding="8">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                </tr>
+
+                {% for item in order.items.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <br>
+
+            <a href="{% url 'warehouse_packing' order.id %}"
+               style="background:green; color:white; padding:10px;
+                      text-decoration:none; border-radius:5px;">
+                Calculate Packing Box
+            </a>
+
+        </div>
+
+    {% empty %}
+        <p>No completed customer orders available.</p>
+    {% endfor %}
+
+</div>
+</body>
+</html>

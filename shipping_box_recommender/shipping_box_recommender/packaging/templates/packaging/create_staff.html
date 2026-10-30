@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Staff</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f5f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 350px;
+            margin: 70px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #263445;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 22px;
+            background: #198754;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #146c43;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            text-decoration: none;
+            color: #2878d0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Create Staff</h1>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if success %}
+        <p class="success">{{ success }}</p>
+        <a href="{% url 'staff_login' %}">Go to Staff Login</a>
+    {% else %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Staff Username</label>
+            <input
+                type="text"
+                name="username"
+                placeholder="Create staff username"
+                required
+            >
+
+            <label>Staff Password</label>
+            <input
+                type="password"
+                name="password"
+                placeholder="Create staff password"
+                required
+            >
+
+            <label>Confirm Password</label>
+            <input
+                type="password"
+                name="confirm_password"
+                placeholder="Confirm staff password"
+                required
+            >
+
+            <button type="submit">Create Staff</button>
+        </form>
+
+    {% endif %}
+
+    <a href="{% url 'home' %}">Back to Home</a>
+
+</div>
+
+</body>
+</html>

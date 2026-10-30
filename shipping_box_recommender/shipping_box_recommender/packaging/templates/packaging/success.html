@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Success</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf2f8;
+            text-align: center;
+            padding: 70px 15px;
+        }
+
+        .success-container {
+            background: white;
+            max-width: 450px;
+            margin: auto;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            color: #16834a;
+        }
+
+        a {
+            display: inline-block;
+            background: #173b57;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="success-container">
+
+    <h1>✓ Success!</h1>
+
+    <h2>{{ product.name }}</h2>
+
+    <p>Your amount has been submitted successfully.</p>
+
+    <h3>Amount: ₹{{ amount }}</h3>
+
+    <a href="{% url 'product_list' %}">
+        Back to Products
+    </a>
+
+</div>
+
+</body>
+</html>

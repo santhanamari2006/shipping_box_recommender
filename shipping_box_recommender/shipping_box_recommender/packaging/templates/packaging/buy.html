@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy Product</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf2f8;
+            text-align: center;
+            padding: 50px 15px;
+        }
+
+        .buy-container {
+            background: white;
+            max-width: 450px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        input {
+            padding: 12px;
+            width: 85%;
+            margin: 15px 0;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #16834a;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="buy-container">
+
+    <h1>Buy Product</h1>
+
+    <h2>{{ product.name }}</h2>
+
+    <p>Enter the amount you want to submit.</p>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input
+            type="number"
+            name="amount"
+            placeholder="Enter amount in ₹"
+            min="0.01"
+            step="0.01"
+            required
+        >
+
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p>
+        <a href="{% url 'product_list' %}">Back to Products</a>
+    </p>
+
+</div>
+
+</body>
+</html>

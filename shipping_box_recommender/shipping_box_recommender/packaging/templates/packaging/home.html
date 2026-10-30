@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shipping Box Recommendation System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f5f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            color: #263445;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            width: 300px;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #263445;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: block;
+            text-decoration: none;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .customer-btn {
+            background: #2878d0;
+        }
+
+        .staff-btn {
+            background: #198754;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Shipping Box Recommendation System</h1>
+
+    <div class="container">
+
+        <!-- CUSTOMER SECTION -->
+        <div class="card">
+            <h2>Customer</h2>
+            <p>Register or log in to browse and purchase products.</p>
+
+            <a href="{% url 'register' %}" class="btn customer-btn">
+                Create User
+            </a>
+
+            <a href="{% url 'login' %}" class="btn customer-btn">
+                Customer Login
+            </a>
+        </div>
+
+        <!-- PACKAGING STAFF SECTION -->
+        <div class="card">
+            <h2>Packaging Staff</h2>
+            <p>Create a staff account or log in to manage customer orders.</p>
+
+            <a href="{% url 'create_staff' %}" class="btn staff-btn">
+                Create Staff
+            </a>
+
+            <a href="{% url 'staff_login' %}" class="btn staff-btn">
+                Staff Login
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warehouse Packing Recommendation</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f5f9;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2457a7;
+            text-align: center;
+        }
+
+        .box-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2457a7;
+            color: white;
+        }
+
+        .total {
+            color: green;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Warehouse Packing Recommendation</h2>
+
+    <p><strong>Customer:</strong> {{ request.user.username }}</p>
+
+    {% if error %}
+
+        <h3 class="error">{{ error }}</h3>
+
+    {% else %}
+
+        <h3>Recommended Shipping Boxes</h3>
+
+        {% for packed_box in packed_boxes %}
+
+        <div class="box-card">
+
+            <h3>Box {{ forloop.counter }} - {{ packed_box.box.name }}</h3>
+
+            <p>
+                <strong>Box Dimensions:</strong>
+                {{ packed_box.box.length }} ×
+                {{ packed_box.box.width }} ×
+                {{ packed_box.box.height }} cm
+            </p>
+
+            <p>
+                <strong>Maximum Weight:</strong>
+                {{ packed_box.box.max_weight }} kg
+            </p>
+
+            <p>
+                <strong>Total Product Weight:</strong>
+                {{ packed_box.total_weight|floatformat:2 }} kg
+            </p>
+
+            <p>
+                <strong>Box Cost:</strong>
+                ₹{{ packed_box.box.cost }}
+            </p>
+
+            <table>
+                <tr>
+                    <th>Product</th>
+                    <th>Placed Length</th>
+                    <th>Placed Width</th>
+                    <th>Placed Height</th>
+                    <th>Position (X, Y, Z)</th>
+                </tr>
+
+                {% for item in packed_box.items %}
+                <tr>
+                    <td>{{ item.product }}</td>
+                    <td>{{ item.length }} cm</td>
+                    <td>{{ item.width }} cm</td>
+                    <td>{{ item.height }} cm</td>
+                    <td>
+                        ({{ item.x }}, {{ item.y }}, {{ item.z }})
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+
+        {% endfor %}
+
+        <p class="total">
+            Total Box Cost: ₹{{ total_box_cost|floatformat:2 }}
+        </p>
+
+    {% endif %}
+
+    <div style="text-align:center; margin-top:25px;">
+        <style>
+    .back-btn {
+        display: inline-block;
+        background-color: #2878d0;
+        color: white;
+        padding: 12px 20px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .back-btn:hover {
+        background-color: #185da8;
+    }
+      </style>
+        <a href="{% url 'warehouse_dashboard' %}" class="back-btn">Back to Warehouse Dashboard</a>
+    </div>
+    </div>
+
+</div>
+
+</body>
+</html>

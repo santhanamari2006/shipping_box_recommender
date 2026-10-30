@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shipping Box Recommendation System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf2f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #173b57;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #173b57;
+            margin: 25px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+        }
+
+        .product-card img {
+            width: 180px;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        .product-card h3 {
+            color: #173b57;
+        }
+
+        .details {
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        .buy-button {
+            display: inline-block;
+            background-color: #16834a;
+            color: white;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .buy-button:hover {
+            background-color: #0d6034;
+        }
+
+        .pagination {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .page-button {
+            display: inline-block;
+            background-color: #173b57;
+            color: white;
+            padding: 12px 25px;
+            margin: 5px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .page-button:hover {
+            background-color: #28658e;
+        }
+
+        @media (max-width: 700px) {
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Shipping Box Recommendation System</h1>
+    <p>Find the right products and explore their details</p>
+</header>
+
+<div style="text-align:right; padding:15px;">
+    <p>Welcome, {{ request.user.username }}</p>
+
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit"
+                style="background-color:#17446B; color:white; padding:10px 25px; border:none; border-radius:6px; cursor:pointer;">
+            Logout
+        </button>
+    </form>
+</div>
+
+<h2>Our Products</h2>
+
+<div class="products">
+
+    {% for product in page_obj %}
+    <div class="product-card">
+
+        <h3>{{ product.name }}</h3>
+
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+            <p>Image not available</p>
+        {% endif %}
+
+        <div class="details">
+            <p><strong>Length:</strong> {{ product.length|default:"Not available" }} cm</p>
+            <p><strong>Width:</strong> {{ product.width|default:"Not available" }} cm</p>
+            <p><strong>Height:</strong> {{ product.height|default:"Not available" }} cm</p>
+            <p><strong>Weight:</strong> {{ product.weight|default:"Not available" }} kg</p>
+            <p><strong>Price:</strong> ₹{{ product.price }}</p>
+        </div>
+
+        <form method="POST" action="{% url 'buy_product' product.id %}">
+             {% csrf_token %}
+
+             <button type="submit"
+                     style="background-color:green;
+                            color:white;
+                            padding:10px 25px;
+                            border:none;
+                            border-radius:6px;
+                            cursor:pointer;
+                            font-size:16px;">
+        Buy Now
+    </button>
+</form>
+
+    </div>
+    {% empty %}
+        <p>No products available.</p>
+    {% endfor %}
+
+</div>
+
+<div class="pagination">
+
+    {% if page_obj.has_previous %}
+        <a class="page-button"
+           href="?page={{ page_obj.previous_page_number }}">
+            Previous
+        </a>
+    {% endif %}
+
+    {% if page_obj.has_next %}
+        <a class="page-button"
+           href="?page={{ page_obj.next_page_number }}">
+            Next
+        </a>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

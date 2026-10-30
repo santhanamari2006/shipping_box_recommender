@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create User</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #eaf2f8;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .register-box {
+            background: white;
+            width: 350px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+        }
+
+        button {
+            background: #16834a;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-box">
+
+    <h1>Create User</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <p>
+            <input type="text" name="username"
+                   placeholder="Enter Username" required>
+        </p>
+
+        <p>
+            <input type="password" name="password1"
+                   placeholder="Enter Password" required>
+        </p>
+
+        <p>
+            <input type="password" name="password2"
+                   placeholder="Confirm Password" required>
+        </p>
+
+        {% if form.errors %}
+            <p style="color:red;">{{ form.errors }}</p>
+        {% endif %}
+
+        <button type="submit">Create Account</button>
+
+    </form>
+
+    <p>Already registered?
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+
+</div>
+
+</body>
+</html>

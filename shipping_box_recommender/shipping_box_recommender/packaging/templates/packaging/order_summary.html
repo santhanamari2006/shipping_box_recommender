@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Purchase Summary</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f5f9;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 750px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: green;
+            text-align: center;
+        }
+
+        h3 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background-color: #17446B;
+            color: white;
+            padding: 14px;
+        }
+
+        td {
+            padding: 14px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .total {
+            text-align: right;
+            color: green;
+            font-size: 23px;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        .continue-btn {
+            display: inline-block;
+            background-color: #2457a7;
+            color: white;
+            padding: 12px 22px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        .continue-btn:hover {
+            background-color: #173b75;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Your Purchase Is Completed!</h2>
+
+    <p>Thank you for shopping with us.</p>
+
+    <h3>Purchase Details</h3>
+
+    <p><strong>Customer:</strong> {{ request.user.username }}</p>
+
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+        </tr>
+
+        {% for item in order.items.all %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="total">
+        Total Amount: ₹{{ order.total_amount }}
+    </div>
+
+    <div style="text-align:center;">
+        <a href="{% url 'product_list' %}" class="continue-btn">
+            Continue Shopping
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
